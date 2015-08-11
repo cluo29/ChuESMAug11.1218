@@ -70,20 +70,6 @@ public class Plugin extends Aware_Plugin {
     public static Button answer;
     public static Button answer2;
 
-    public Thread esm_redundancy_thread = new Thread() {
-        public void run() {
-            while (true) {
-                    if(screenOn==false)
-                        //alert.dismiss();
-
-                try {
-                    Thread.sleep(501);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
     @Override
     public void onCreate() {
         super.onCreate();
@@ -179,16 +165,16 @@ public class Plugin extends Aware_Plugin {
         IntentFilter boot_filter = new IntentFilter("session_boot_new");
         battery_filter.addAction("session_boot_old");
         registerReceiver(bootListener, boot_filter);
-        startBootESM();
+
 
         if (Aware.getSetting(this, "study_id").length() == 0) {
             Intent joinStudy = new Intent(this, Aware_Preferences.StudyConfig.class);
             joinStudy.putExtra(Aware_Preferences.StudyConfig.EXTRA_JOIN_STUDY, "https://api.awareframework.com/index.php/webservice/index/410/u6Es5y8OW48a");
             startService(joinStudy);
         }
-
+        startBootESM();
         sendBroadcast(new Intent(Aware.ACTION_AWARE_REFRESH));
-        esm_redundancy_thread.start();
+
     }
 
     private void startBootESM() {
@@ -196,8 +182,8 @@ public class Plugin extends Aware_Plugin {
 
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Why did you unlock your phone?");
-            builder.setMessage("Phone restart detected. Please choose below.");
+            builder.setTitle("Why did you start your phone?");
+            builder.setMessage("Please choose below.");
 
             final View layout = inflater.inflate(R.layout.question, null);
             builder.setView(layout);
@@ -207,7 +193,7 @@ public class Plugin extends Aware_Plugin {
             alert = builder.create();
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
             answer.setLayoutParams(params);
-            answer.setText("Start on a new objective.");
+            answer.setText("Start doing something new.");
             answer.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     sendBroadcast(new Intent("session_boot_new"));
@@ -216,7 +202,7 @@ public class Plugin extends Aware_Plugin {
                 }
             });
             answer2.setLayoutParams(params);
-            answer2.setText("Continue previous objective.");
+            answer2.setText("Continue something I was doing before.");
             answer2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     sendBroadcast(new Intent("session_boot_old"));
@@ -561,7 +547,7 @@ public class Plugin extends Aware_Plugin {
             if (intent.getAction().equals("session_boot_new")) {
                 // ESM new objective answer
                 esm_status = 2;
-                esm_user_answer = "Start on a new objective.";
+                esm_user_answer = "Start doing something new.";
                 Log.d("Session", "new");
                 session = "3";
             }
@@ -569,7 +555,7 @@ public class Plugin extends Aware_Plugin {
                 // ESM old objective answer
                 //
                 esm_status = 2;
-                esm_user_answer = "Continue previous objective.";
+                esm_user_answer = "Continue something I was doing before.";
                 Log.d("Session", "old");
                 session = "3";
             }
