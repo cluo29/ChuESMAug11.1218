@@ -180,48 +180,48 @@ public class Plugin extends Aware_Plugin {
     private void startBootESM() {
 
 
-            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Why did you start your phone?");
-            builder.setMessage("Please choose below.");
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Why did you start your phone?");
+        builder.setMessage("Please choose below.");
 
-            final View layout = inflater.inflate(R.layout.question, null);
-            builder.setView(layout);
-            answersHolder = (LinearLayout) layout.findViewById(R.id.esm_boot_question);
-            answer = new Button(this);
-            answer2 = new Button(this);
-            alert = builder.create();
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
-            answer.setLayoutParams(params);
-            answer.setText("Start doing something new.");
-            answer.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    sendBroadcast(new Intent("session_boot_new"));
-                    alert.dismiss();
+        final View layout = inflater.inflate(R.layout.question, null);
+        builder.setView(layout);
+        answersHolder = (LinearLayout) layout.findViewById(R.id.esm_boot_question);
+        answer = new Button(this);
+        answer2 = new Button(this);
+        alert = builder.create();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
+        answer.setLayoutParams(params);
+        answer.setText("Start to use my phone.");
+        answer.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sendBroadcast(new Intent("session_boot_new"));
+                alert.dismiss();
 
-                }
-            });
-            answer2.setLayoutParams(params);
-            answer2.setText("Continue something I was doing before.");
-            answer2.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    sendBroadcast(new Intent("session_boot_old"));
-                    alert.dismiss();
+            }
+        });
+        answer2.setLayoutParams(params);
+        answer2.setText("Continue to use my phone.");
+        answer2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                sendBroadcast(new Intent("session_boot_old"));
+                alert.dismiss();
 
-                }
-            });
-            answersHolder.addView(answer);
-            answersHolder.addView(answer2);
+            }
+        });
+        answersHolder.addView(answer);
+        answersHolder.addView(answer2);
         alert.setCanceledOnTouchOutside(false);
 
-            alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-            alert.show();
-            alert.getWindow().getAttributes();
-            View v = (View)alert.getWindow().findViewById(android.R.id.message).getParent();
-            v.setMinimumHeight(0);
-            TextView textView = (TextView) alert.findViewById(android.R.id.message);
-            textView.setTextSize(13);
-            textView.setMinimumHeight(0);
+        alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+        alert.show();
+        alert.getWindow().getAttributes();
+        View v = (View)alert.getWindow().findViewById(android.R.id.message).getParent();
+        v.setMinimumHeight(0);
+        TextView textView = (TextView) alert.findViewById(android.R.id.message);
+        textView.setTextSize(13);
+        textView.setMinimumHeight(0);
 
     }
 
@@ -252,7 +252,7 @@ public class Plugin extends Aware_Plugin {
             q1Body.put("esm_type", ESM.TYPE_ESM_QUICK_ANSWERS);
             q1Body.put("esm_title", "Why did you unlock your phone?");
             q1Body.put("esm_instructions", "Please choose below.");
-            q1Body.put("esm_quick_answers", new JSONArray().put("Start on a new objective.").put("Continue previous objective."));
+            q1Body.put("esm_quick_answers", new JSONArray().put("Start to use my phone.").put("Continue to use my phone."));
             q1Body.put("esm_submit", "Next");
             q1Body.put("esm_expiration_threshold", 300);
             q1Body.put("esm_trigger", "trigger");
@@ -360,14 +360,14 @@ public class Plugin extends Aware_Plugin {
 
 
 
-                    alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-                    alert.show();
-                    alert.getWindow().getAttributes();
-                    View v = (View)alert.getWindow().findViewById(android.R.id.message).getParent();
-                    v.setMinimumHeight(0);
-                    TextView textView = (TextView) alert.findViewById(android.R.id.message);
-                    textView.setTextSize(13);
-                    textView.setMinimumHeight(0);
+                alert.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                alert.show();
+                alert.getWindow().getAttributes();
+                View v = (View)alert.getWindow().findViewById(android.R.id.message).getParent();
+                v.setMinimumHeight(0);
+                TextView textView = (TextView) alert.findViewById(android.R.id.message);
+                textView.setTextSize(13);
+                textView.setMinimumHeight(0);
 
             }
 
@@ -547,7 +547,7 @@ public class Plugin extends Aware_Plugin {
             if (intent.getAction().equals("session_boot_new")) {
                 // ESM new objective answer
                 esm_status = 2;
-                esm_user_answer = "Start doing something new.";
+                esm_user_answer = "Start to use my phone.";
                 Log.d("Session", "new");
                 session = "3";
             }
@@ -555,7 +555,7 @@ public class Plugin extends Aware_Plugin {
                 // ESM old objective answer
                 //
                 esm_status = 2;
-                esm_user_answer = "Continue something I was doing before.";
+                esm_user_answer = "Continue to use my phone.";
                 Log.d("Session", "old");
                 session = "3";
             }
