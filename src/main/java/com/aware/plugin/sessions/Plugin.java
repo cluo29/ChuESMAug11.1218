@@ -163,7 +163,7 @@ public class Plugin extends Aware_Plugin {
         CONTEXT_URIS = new Uri[]{Provider.Session_Data.CONTENT_URI};
 
         IntentFilter boot_filter = new IntentFilter("session_boot_new");
-        battery_filter.addAction("session_boot_old");
+        boot_filter.addAction("session_boot_old");
         registerReceiver(bootListener, boot_filter);
 
 
